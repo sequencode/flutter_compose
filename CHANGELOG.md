@@ -4,4 +4,8 @@ Initial release
 
 ## 0.0.2
 
-Doc: Add basic use
+Docs: Add basic use
+
+## 0.0.3
+
+Docs: Update readme
