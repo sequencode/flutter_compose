@@ -16,3 +16,7 @@ Docs:
 
 * Added description
 * Added repository link
+
+## 0.0.4+1
+
+Docs: Update readme

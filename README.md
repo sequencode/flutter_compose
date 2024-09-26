@@ -1,16 +1,19 @@
 # Flutter Compose
 
-**Flutter Compose** is a package designed to streamline the creation and management of reusable components within Flutter applications. It introduces a new approach to widget composition, emphasizing the separation of concerns between component logic and widget rendering.
+**Inspired by Vue Composables, Flutter Compose streamlines the creation and management of reusable components in Flutter applications.**
 
-**Key concepts:**
+By encapsulating stateful logic and separating concerns, Flutter Compose helps you build more modular, maintainable, and efficient Flutter apps.
 
-- **Composable:** A `Composable` object represents a reusable component that can be attached to a `ComposeWidget` instance. It provides lifecycle methods (`onInit`, `onDispose`) and access to the `BuildContext`. By calling `notifyListeners`, it can trigger a rebuild of the associated `ComposeWidget`.
-- **Use:** The `Use` interface provides a way to attach `Composable` objects to a `ComposeWidget` instance.
-- **ComposeWidget:** A custom widget that extends `Widget` and utilizes the `Use` interface to manage `Composable` objects.
+**Key features:**
 
-# Usage
+* **Reusable components:** Create and reuse `Composable` objects to encapsulate complex logic and improve code organization.
+* **Simplified state management:** Manage state within `Composable` objects, reducing boilerplate and making your code easier to understand.
+* **Improved code structure:** Separate component logic from widget rendering for better maintainability and testability.
+* **Enhanced flexibility:** Customize your `Composable` objects to fit your specific needs and project requirements.
 
-1. **Create a Composable:** Define a class that extends `Composable` and implements the necessary methods. In the provided example, `ValueNotifierComposable` is a `Composable` that manages a `ValueNotifier` object.
+**Usage:**
+
+1. **Create a Composable:** Define a class that extends `Composable` and implements the necessary methods.
 
 ```dart
 class ValueNotifierComposable<T> extends Composable<ValueNotifier<T>> {
@@ -37,7 +40,7 @@ class ValueNotifierComposable<T> extends Composable<ValueNotifier<T>> {
 }
 ```
 
-2. **Make it available to the Use instance:** Create an extension method on the `Use` interface to provide a convenient way to attach the `Composable` object. The `valueNotifier` extension method in the example allows you to create a `ValueNotifierComposable` directly from the `Use` instance.
+2. **Make it available to the Use instance:** Use the `valueNotifier` extension method to attach your `Composable` to a `Use` instance.
 
 ```dart
 extension ValueNotifierComposableExtension on Use {
@@ -47,8 +50,7 @@ extension ValueNotifierComposableExtension on Use {
 }
 ```
 
-3. **Create ComposeWidget and access the Composable:** Create a `ComposeWidget` and access the `Composable` object within its `build` method. In the example, `CounterWidget` uses the `valueNotifier` extension method to create a `ValueNotifierComposable` and then accesses its `ValueNotifier` object to display and update a counter value.
-
+3. **Create ComposeWidget and access the Composable:** Access the `Composable` object within your `ComposeWidget`'s `build` method.
 
 ```dart
 class CounterWidget extends ComposeWidget {
