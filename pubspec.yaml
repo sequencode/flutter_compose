@@ -1,6 +1,6 @@
 name: flutter_compose
 description: "Flutter Compose is a package that simplifies the creation and management of reusable components in Flutter applications without using StatefulWidget."
-version: 0.0.3
+version: 0.0.4
 homepage: "https://sequencode.dev/"
 repository: "https://github.com/sequencode/flutter_compose"
 
