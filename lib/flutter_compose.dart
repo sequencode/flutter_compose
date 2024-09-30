@@ -7,5 +7,4 @@ import 'package:flutter/material.dart';
 
 part 'src/composable.dart';
 part 'src/node.dart';
-part 'src/use.dart';
 part 'src/widget.dart';

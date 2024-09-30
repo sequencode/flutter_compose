@@ -1,6 +1,6 @@
 name: flutter_compose
 description: "Inspired by Vue Composables, flutter_compose offers a streamlined way to create reusable components in Flutter. Improve code organization and reduce boilerplate."
-version: 0.0.4+1
+version: 0.0.5
 homepage: "https://sequencode.dev/"
 repository: "https://github.com/sequencode/flutter_compose"
 

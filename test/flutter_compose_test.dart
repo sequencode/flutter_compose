@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 class TestApp extends StatelessWidget {
   const TestApp(this.builder, {super.key});
 
-  final Widget Function(BuildContext context, Use use) builder;
+  final Widget Function(BuildContext context) builder;
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +18,20 @@ class TestApp extends StatelessWidget {
 class TestComposeWidget extends ComposeWidget {
   const TestComposeWidget(this.builder, {super.key});
 
-  final Widget Function(BuildContext context, Use use) builder;
+  final Widget Function(BuildContext context) builder;
 
   @override
-  Widget build(BuildContext context, Use use) {
-    return MaterialApp(home: builder(context, use));
+  Widget build(BuildContext context) {
+    return MaterialApp(home: builder(context));
   }
 }
 
-extension TestUseExtension on Use {
-  ValueNotifier<int> testNotifier(int initialValue) {
-    return attach(TestValueNotifierComposable(initialValue));
-  }
+ValueNotifier<int> testNotifier(int initialValue) {
+  return attach(TestValueNotifierComposable(initialValue));
+}
 
-  int testHash<T>(T value) {
-    return attach(TestHashComposable(value));
-  }
+int testHash<T>(T value) {
+  return attach(TestHashComposable(value));
 }
 
 class TestValueNotifierComposable<T> extends Composable<ValueNotifier<T>> {
@@ -73,8 +71,8 @@ void main() {
     testWidgets('Test composable on init', (widgetTester) async {
       late ValueNotifier<int> notifier;
 
-      await widgetTester.pumpWidget(TestApp((context, use) {
-        notifier = use.testNotifier(0);
+      await widgetTester.pumpWidget(TestApp((context) {
+        notifier = testNotifier(0);
 
         return Text(notifier.value.toString());
       }));
@@ -85,8 +83,8 @@ void main() {
     testWidgets('Test composable on dispose', (widgetTester) async {
       late ValueNotifier<int> notifier;
 
-      await widgetTester.pumpWidget(TestApp((context, use) {
-        notifier = use.testNotifier(0);
+      await widgetTester.pumpWidget(TestApp((context) {
+        notifier = testNotifier(0);
 
         return Container();
       }));
@@ -101,8 +99,8 @@ void main() {
     testWidgets('Test composable on change', (widgetTester) async {
       late ValueNotifier<int> notifier;
 
-      await widgetTester.pumpWidget(TestApp((context, use) {
-        notifier = use.testNotifier(0);
+      await widgetTester.pumpWidget(TestApp((context) {
+        notifier = testNotifier(0);
 
         return Text(notifier.value.toString());
       }));
@@ -121,10 +119,10 @@ void main() {
       late int hash2;
       late int hash3;
 
-      await widgetTester.pumpWidget(TestApp((context, use) {
-        hash1 = use.testHash(0);
-        hash2 = use.testHash(0);
-        hash3 = use.testHash(1);
+      await widgetTester.pumpWidget(TestApp((context) {
+        hash1 = testHash(0);
+        hash2 = testHash(0);
+        hash3 = testHash(1);
 
         return Container();
       }));

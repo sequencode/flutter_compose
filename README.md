@@ -13,11 +13,12 @@ By encapsulating stateful logic and separating concerns, Flutter Compose helps y
 
 **Usage:**
 
-1. **Create a Composable:** Define a class that extends `Composable` and implements the necessary methods.
+1. **Create a Composable:** Define a class that extends `Composable` and implements the necessary methods. The optional super constructor list can be used to specify properties that should
+  be compared for equality checks. This is useful for ensuring that Composables are updated correctly during hot reload.
 
 ```dart
 class ValueNotifierComposable<T> extends Composable<ValueNotifier<T>> {
-  ValueNotifierComposable(this.value);
+  ValueNotifierComposable(this.value) : super([value]);
 
   final T value;
   late final ValueNotifier<T> notifier;
@@ -40,25 +41,24 @@ class ValueNotifierComposable<T> extends Composable<ValueNotifier<T>> {
 }
 ```
 
-2. **Make it available to the Use instance:** Use the `valueNotifier` extension method to attach your `Composable` to a `Use` instance.
+2. **Create a function to attach the Composable using the global `attach` method:** Define a function that takes the required parameters and uses the `attach` method to attach the `Composable`.
+
 
 ```dart
-extension ValueNotifierComposableExtension on Use {
   ValueNotifier<T> valueNotifier<T>(T value) {
     return attach(ValueNotifierComposable(value));
   }
-}
 ```
 
-3. **Create ComposeWidget and access the Composable:** Access the `Composable` object within your `ComposeWidget`'s `build` method.
+3. **Create ComposeWidget and access the Composable:** Call the function from step 2 within your `ComposeWidget`'s `build` method to access the `Composable` object.
 
 ```dart
 class CounterWidget extends ComposeWidget {
   const CounterWidget({super.key});
 
   @override
-  Widget build(BuildContext context, Use use) {
-    final counter = use.valueNotifier(0);
+  Widget build(BuildContext context) {
+    final counter = valueNotifier(0);
 
     return Scaffold(
       body: Center(
@@ -81,6 +81,9 @@ class CounterWidget extends ComposeWidget {
 - **Improved maintainability:** By separating component logic from widget rendering, your code becomes more modular and easier to understand and maintain.
 - **Simplified state management:** `Composable` objects can handle their own state management, reducing the complexity of managing state within your widgets.
 
+**Important Note:**
+
+Composables are designed to be called in a deterministic order. Avoid assigning Composables within loops or conditional statements, as this can lead to unexpected behavior and potential bugs. Ensure that your Composables are always accessed in the same order within your `ComposeWidget`.
 
 **Additional notes:**
 
